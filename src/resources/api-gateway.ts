@@ -12,7 +12,6 @@ export const StripeApiGateway = {
     //       Principal: "*",
     //       Action: [
     //         "execute-api:Invoke",
-    //         "execute-api:ManageConnections",
     //       ],
     //       Resource: [
     //         "execute-api:/*"

@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import { StripeApiGateway, StripeApiGatewayDeployment, ApiGatewayAccounts, ApiGatewayProducts, ApiGatewayAccountsGetMethod, ApiGatewayProductsGetMethod, ApiGatewayProductsPostMethod, StripeApiGatewayStage } from '@resources/api-gateway';
 import { StripeBus, StripeApiGatewayTarget } from "@resources/eventbridge";
+import { EventBridgeDeadLetterQueue } from "@resources/sqs";
 
 const serverlessConfiguration: AWS = {
   service: 'stripe-api-gateway',
@@ -30,6 +31,7 @@ const serverlessConfiguration: AWS = {
       StripeApiGatewayStage,
       StripeBus,
       StripeApiGatewayTarget,
+      EventBridgeDeadLetterQueue,
     }
   }
 };
