@@ -4,21 +4,23 @@ export const StripeApiGateway = {
   Type: 'AWS::ApiGateway::RestApi',
   Properties: {
     Name: 'StripeApiGateway',
-    // Policy: {
-    //   Version: "2012-10-17",
-    //   Statement: [
-    //     {
-    //       Effect: "Allow",
-    //       Principal: "*",
-    //       Action: [
-    //         "execute-api:Invoke",
-    //       ],
-    //       Resource: [
-    //         "execute-api:/*"
-    //       ]
-    //     }
-    //   ],
-    // }
+    Policy: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Principal: {
+            Service: "events.amazonaws.com"
+          },
+          Action: [
+            "execute-api:Invoke",
+          ],
+          Resource: [
+            "execute-api:/*"
+          ]
+        }
+      ],
+    }
   },
 };
 
@@ -46,7 +48,7 @@ export const ApiGatewayAccountsGetMethod = {
     HttpMethod: 'GET',
     ResourceId: ref({ ApiGatewayAccounts }),
     RestApiId: ref({ StripeApiGateway }),
-    AuthorizationType: 'NONE',
+    AuthorizationType: 'AWS_IAM',
     Integration: {
       RequestParameters: {
         'integration.request.header.Authorization': '\'Bearer sk_test_51IPtlqEiv2Oj00NPjgzk55DwP4d9JrDbf3LpFGbJ4agU1Rm3s8ZrM2MSuoAUYhYUbeqgppkpWIpUaENIJ7aGLnIO000kzGBT2d\'',
@@ -65,7 +67,7 @@ export const ApiGatewayProductsGetMethod = {
     HttpMethod: 'GET',
     ResourceId: ref({ ApiGatewayProducts }),
     RestApiId: ref({ StripeApiGateway }),
-    AuthorizationType: 'NONE',
+    AuthorizationType: 'AWS_IAM',
     Integration: {
       RequestParameters: {
         'integration.request.header.Authorization': '\'Bearer sk_test_51IPtlqEiv2Oj00NPjgzk55DwP4d9JrDbf3LpFGbJ4agU1Rm3s8ZrM2MSuoAUYhYUbeqgppkpWIpUaENIJ7aGLnIO000kzGBT2d\'',
@@ -84,7 +86,7 @@ export const ApiGatewayProductsPostMethod = {
     HttpMethod: 'POST',
     ResourceId: ref({ ApiGatewayProducts }),
     RestApiId: ref({ StripeApiGateway }),
-    AuthorizationType: 'NONE',
+    AuthorizationType: 'AWS_IAM',
     Integration: {
       RequestParameters: {
         'integration.request.header.Authorization': '\'Bearer sk_test_51IPtlqEiv2Oj00NPjgzk55DwP4d9JrDbf3LpFGbJ4agU1Rm3s8ZrM2MSuoAUYhYUbeqgppkpWIpUaENIJ7aGLnIO000kzGBT2d\'',
