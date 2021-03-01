@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import { StripeApiGateway, StripeApiGatewayDeployment, ApiGatewayAccounts, ApiGatewayProducts, ApiGatewayAccountsGetMethod, ApiGatewayProductsGetMethod, ApiGatewayProductsPostMethod, StripeApiGatewayStage } from '@resources/api-gateway';
+import { StripeBus, StripeApiGatewayTarget } from "@resources/eventbridge";
 
 const serverlessConfiguration: AWS = {
   service: 'stripe-api-gateway',
@@ -11,21 +12,26 @@ const serverlessConfiguration: AWS = {
       includeModules: true,
     },
   },
-  plugins: ['serverless-webpack'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
-    apiGateway: {
-      minimumCompressionSize: 1024,
-      shouldStartNameWithService: true,
-    },
-    environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-    },
-    lambdaHashingVersion: '20201221',
+    profile: 'fredericb-programmatic',
+    region: 'eu-west-1',
   },
-  // import the function via paths
-  functions: { hello },
+  resources: {
+    Resources: {
+      StripeApiGateway,
+      StripeApiGatewayDeployment,
+      ApiGatewayAccounts,
+      ApiGatewayProducts,
+      ApiGatewayAccountsGetMethod,
+      ApiGatewayProductsGetMethod,
+      ApiGatewayProductsPostMethod,
+      StripeApiGatewayStage,
+      StripeBus,
+      StripeApiGatewayTarget,
+    }
+  }
 };
 
 module.exports = serverlessConfiguration;
